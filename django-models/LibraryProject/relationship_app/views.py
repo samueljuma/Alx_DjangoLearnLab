@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from .models import Author, Book, Librarian
 from .models import Library
-# import ListView and DetailView
-from django.views.generic import ListView, DetailView
+from django.views.generic.detail import DetailView
 
 
 # Function Based Views
