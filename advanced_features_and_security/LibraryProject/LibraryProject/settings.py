@@ -27,6 +27,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Security Headers
+SECURE_BROWSER_XSS_FILTER = True  # Enables X-XSS-Protection
+X_FRAME_OPTIONS = "DENY"  # Prevents clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents MIME sniffing
+
+# Use HTTPS Secure Cookies
+CSRF_COOKIE_SECURE = True  # Ensures CSRF cookie is sent over HTTPS
+SESSION_COOKIE_SECURE = True  # Ensures session cookies are sent over HTTPS
+
 
 # Application definition
 
@@ -39,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "bookshelf",
     "relationship_app",
+    "csp",
 ]
 
 MIDDLEWARE = [
@@ -125,3 +135,16 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "bookshelf.CustomUser"
+
+
+CSP_DEFAULT_SRC = ("'self'",)  # Only allow content from our domain
+CSP_SCRIPT_SRC = ("'self'", "https://trusted-cdn.com")  # Allow scripts from trusted CDN
+CSP_STYLE_SRC = ("'self'", "https://trusted-cdn.com")  # Allow CSS from trusted CDN
+CSP_IMG_SRC = ("'self'", "data:", "https://trusted-image-host.com")  # Allow images
+CSP_FONT_SRC = ("'self'", "https://trusted-fonts.com")  # Allow fonts
+CSP_FRAME_ANCESTORS = ("'none'",)  # Prevent iframe embedding
+
+SECURE_HSTS_SECONDS = 31536000 # Enable HSTS for 1 year 
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True # Enable HSTS preload list
+SECURE_REDIRECT_EXEMPT = [] # List of URL prefixes that are exempt from HTTPS redirect

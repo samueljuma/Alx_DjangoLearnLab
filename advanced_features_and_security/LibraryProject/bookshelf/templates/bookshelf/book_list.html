@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+</head>
+<body>
+    <h1>Book List</h1>
+
+    <!-- Secure Search Form -->
+    <form method="GET" action="{% url 'search_books' %}">
+        <input type="text" name="q" value="{{ query|default:'' }}" placeholder="Search for books">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book_detail' book.id %}">
+                    {{ book.title|escape }} by {{ book.author|escape }} ({{ book.publication_year }})
+                </a>
+            </li>
+        {% empty %}
+            <li>No books found.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'create_book' %}">Add a New Book</a>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Book</title>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit{% else %}Create{% endif %} Book</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}  <!-- Safe way to render form fields -->
+        <button type="submit">Save</button>
+    </form>
+
+    <a href="{% url 'book_list' %}">Cancel</a>
+</body>
+</html>
