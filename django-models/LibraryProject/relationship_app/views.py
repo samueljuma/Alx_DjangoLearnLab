@@ -7,18 +7,41 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from relationship_app.utils import role_required
+from django.contrib.auth.decorators import user_passes_test
 
-@role_required("Admin")
+# @role_required("Admin")
+# def admin_view(request):
+#     return render(request, "relationship_app/admin_view.html", {"role": "Admin"})
+
+# @role_required("Librarian")
+# def librarian_view(request):
+#     return render(request, "relationship_app/librarian_view.html", {"role": "Librarian"})
+
+# @role_required("Member")
+# def member_view(request):
+#     return render(request, "relationship_app/member_view.html", {"role": "Member"})
+
+
+def is_admin(user):
+    return user.profile.role == 'Admin'
+
+def is_librarian(user):
+    return user.profile.role == 'Librarian'
+
+def is_member(user):
+    return user.profile.role == 'Member'
+
+@user_passes_test(is_admin)
 def admin_view(request):
-    return render(request, "relationship_app/admin_view.html", {"role": "Admin"})
+    return render(request, 'relationship_app/admin_view.html')
 
-@role_required("Librarian")
+@user_passes_test(is_librarian)
 def librarian_view(request):
-    return render(request, "relationship_app/librarian_view.html", {"role": "Librarian"})
+    return render(request, 'relationship_app/librarian_view.html')
 
-@role_required("Member")
+@user_passes_test(is_member)
 def member_view(request):
-    return render(request, "relationship_app/member_view.html", {"role": "Member"})
+    return render(request, 'relationship_app/member_view.html')
 
 
 # Function Based Views
