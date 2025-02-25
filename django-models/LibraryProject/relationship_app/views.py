@@ -6,6 +6,19 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from relationship_app.utils import role_required
+
+@role_required("Admin")
+def admin_view(request):
+    return render(request, "relationship_app/admin_view.html", {"role": "Admin"})
+
+@role_required("Librarian")
+def librarian_view(request):
+    return render(request, "relationship_app/librarian_view.html", {"role": "Librarian"})
+
+@role_required("Member")
+def member_view(request):
+    return render(request, "relationship_app/member_view.html", {"role": "Member"})
 
 
 # Function Based Views
