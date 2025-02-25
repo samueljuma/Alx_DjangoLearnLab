@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from bookshelf.models import Book
 from django.shortcuts import get_object_or_404
-from bookshelf.forms import ExampleForm
+from .forms import ExampleForm
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
