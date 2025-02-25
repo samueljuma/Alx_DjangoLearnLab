@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from bookshelf.models import Book
 from django.shortcuts import get_object_or_404
-from bookshelf.forms import BookForm
+from bookshelf.forms import ExampleForm
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 
@@ -23,12 +23,12 @@ def book_detail(request, book_id):
 
 def create_book(request):
     if request.method == "POST":
-        form = BookForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             form.save()  # ORM handles input safely
             return redirect("book_list")
     else:
-        form = BookForm()
+        form = ExampleForm()
     return render(request, "bookshelf/book_form.html", {"form": form})
 
 
@@ -36,12 +36,12 @@ def update_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
     if request.method == "POST":
-        form = BookForm(request.POST, instance=book)
+        form = ExampleForm(request.POST, instance=book)
         if form.is_valid():
             form.save()  # Safe update
             return redirect("book_detail", book_id=book.id)
     else:
-        form = BookForm(instance=book)
+        form = ExampleForm(instance=book)
 
     return render(request, "bookshelf/book_form.html", {"form": form})
 
