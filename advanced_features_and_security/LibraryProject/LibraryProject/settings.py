@@ -28,13 +28,22 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Security Headers
-SECURE_BROWSER_XSS_FILTER = True  # Enables X-XSS-Protection
-X_FRAME_OPTIONS = "DENY"  # Prevents clickjacking
-SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents MIME sniffing
+# Enables X-XSS-Protection
+SECURE_BROWSER_XSS_FILTER = True
+
+# Prevents clickjacking
+X_FRAME_OPTIONS = "DENY"
+
+# Prevents MIME sniffing
+SECURE_CONTENT_TYPE_NOSNIFF = True 
 
 # Use HTTPS Secure Cookies
-CSRF_COOKIE_SECURE = True  # Ensures CSRF cookie is sent over HTTPS
-SESSION_COOKIE_SECURE = True  # Ensures session cookies are sent over HTTPS
+# Ensures CSRF cookie is sent over HTTPS
+CSRF_COOKIE_SECURE = True 
+
+# Ensures session cookies are sent over HTTPS
+SESSION_COOKIE_SECURE = True  
+
 
 
 # Application definition
@@ -144,7 +153,32 @@ CSP_IMG_SRC = ("'self'", "data:", "https://trusted-image-host.com")  # Allow ima
 CSP_FONT_SRC = ("'self'", "https://trusted-fonts.com")  # Allow fonts
 CSP_FRAME_ANCESTORS = ("'none'",)  # Prevent iframe embedding
 
-SECURE_HSTS_SECONDS = 31536000 # Enable HSTS for 1 year 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = True # Apply HSTS to all subdomains
-SECURE_HSTS_PRELOAD = True # Enable HSTS preload list
+# Force HTTPS redirect
+# Redirects all HTTP requests to HTTPS
+SECURE_SSL_REDIRECT = True  
+
+# HTTP Strict Transport Security (HSTS)
+# Enable HSTS for 1 year
+SECURE_HSTS_SECONDS = 31536000 
+
+# Apply HSTS to all subdomains
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True 
+
+# Enable HSTS preload list
+SECURE_HSTS_PRELOAD = True 
+
 SECURE_REDIRECT_EXEMPT = [] # List of URL prefixes that are exempt from HTTPS redirect
+
+
+"""
+    Setting	                                Purpose
+    SECURE_SSL_REDIRECT = True	            Forces HTTPS for all requests
+    SECURE_HSTS_SECONDS = 31536000	        Enables HSTS for 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True	Applies HSTS to subdomains
+    SECURE_HSTS_PRELOAD = True	            Allows preloading for better enforcement
+    SESSION_COOKIE_SECURE = True	        Ensures session cookies are sent over HTTPS
+    CSRF_COOKIE_SECURE = True	            Ensures CSRF tokens are sent over HTTPS
+    X_FRAME_OPTIONS = "DENY"	            Prevents clickjacking attacks
+    SECURE_CONTENT_TYPE_NOSNIFF = True	    Stops MIME-type sniffing
+    SECURE_BROWSER_XSS_FILTER = True	    Enables browser's XSS protection
+"""
