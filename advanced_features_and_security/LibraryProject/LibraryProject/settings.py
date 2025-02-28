@@ -44,6 +44,8 @@ CSRF_COOKIE_SECURE = True
 # Ensures session cookies are sent over HTTPS
 SESSION_COOKIE_SECURE = True  
 
+# Redirect to HTTPS
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Application definition
