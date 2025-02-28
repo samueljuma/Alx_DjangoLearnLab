@@ -1,5 +1,3 @@
-# Introduction to Django Development Environment Setup
-
 
 ## Django Book Permissions System
 
