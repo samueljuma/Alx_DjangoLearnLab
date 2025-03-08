@@ -10,6 +10,7 @@ from .forms import BookForm
 from django.contrib.auth.forms import UserCreationForm
 from relationship_app.utils import role_required
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 
 # @role_required("Admin")
 # def admin_view(request):
@@ -23,19 +24,17 @@ from django.contrib.auth.decorators import user_passes_test
 # def member_view(request):
 #     return render(request, "relationship_app/member_view.html", {"role": "Member"})
 
-
 def is_admin(user):
-    return user.profile.role == "Admin"
-
+    return user.is_authenticated and user.profile.role == "Admin"
 
 def is_librarian(user):
-    return user.profile.role == "Librarian"
-
+    return user.is_authenticated and user.profile.role == "Librarian"
 
 def is_member(user):
-    return user.profile.role == "Member"
+    return user.is_authenticated and user.profile.role == "Member"
 
 
+@login_required
 @user_passes_test(is_admin)
 def admin_view(request):
     return render(request, "relationship_app/admin_view.html")
