@@ -3,7 +3,7 @@ from .models import Book, Author
 import datetime
 
 
-class BookSerialiser(serializers.ModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     """Serializer for the Book model."""
 
     class Meta:
@@ -23,7 +23,7 @@ class BookSerialiser(serializers.ModelSerializer):
 class AuthorSerializer(serializers.ModelSerializer):
     """Serializer for the Author model including nested books."""
 
-    books = BookSerialiser(many=True, read_only=True)
+    books = BookSerializer(many=True, read_only=True)
 
     class Meta:
         model = Author
