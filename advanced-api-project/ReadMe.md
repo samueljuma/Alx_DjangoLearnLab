@@ -137,3 +137,77 @@ GET books/?publication_year=2020
 
 ---
 
+# Book API - Search and Ordering Functionality
+
+## Overview
+This API provides search and ordering functionality for retrieving book records. Users can filter books by title or author name, and order them based on title or publication year.
+
+## Features
+- **Search**: Users can search for books by `title` or `author name`.
+- **Ordering**: Users can order results by `title` or `publication year`, in ascending or descending order.
+- **Default Ordering**: Results are sorted by `title` by default.
+
+## Configuration in `views.py`
+To enable search and ordering, the following configurations are added to `BookListView`:
+
+```python
+from rest_framework import generics
+from rest_framework.filters import SearchFilter, OrderingFilter
+from .models import Book
+from .serializers import BookSerializer
+
+class BookListView(generics.ListAPIView):
+    """
+    API view to retrieve a list of books with search and ordering functionality.
+    Users can search by title or author name and order results by title or publication year.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    
+    # Enable search and ordering functionality
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ["title", "author__name"]  # Search by title and author name
+    ordering_fields = ["title", "publication_year"]  # Order by title and publication year
+    ordering = ["title"]  # Default ordering by title
+```
+
+## How to Use
+### 1️⃣ Searching
+Users can search for books by `title` or `author name` using the `search` query parameter.
+
+**Example: Search by title**
+```
+http://localhost:8000/api/v1/books/?search=harry
+```
+
+**Example: Search by author name**
+```
+http://localhost:8000/api/v1/books/?search=rowling
+```
+
+### 2️⃣ Ordering
+Users can order results by `title` or `publication year` using the `ordering` query parameter.
+
+**Example: Order by title (ascending)**
+```
+http://localhost:8000/api/v1/books/?ordering=title
+```
+
+**Example: Order by publication year (ascending)**
+```
+http://localhost:8000/api/v1/books/?ordering=publication_year
+```
+
+**Example: Order by publication year (descending)**
+```
+http://localhost:8000/api/v1/books/?ordering=-publication_year
+```
+
+💡 **Note:** Prefixing a field with `-` reverses the order (descending).
+
+## Summary
+- **Search books** by `title` or `author name` using `?search=your_query`.
+- **Sort results** using `?ordering=title` or `?ordering=publication_year`.
+- **Reverse sorting** by adding a `-` before the field, e.g., `?ordering=-title`.
+
+

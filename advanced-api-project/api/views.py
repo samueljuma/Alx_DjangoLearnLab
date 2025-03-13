@@ -6,7 +6,7 @@ from .filters import BookFilter
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 class BookListView(generics.ListAPIView):
@@ -16,6 +16,7 @@ class BookListView(generics.ListAPIView):
     - Uses `ListAPIView` to provide a read-only list endpoint.
     - Allows unauthenticated users to read but requires authentication for any modification.
     - Supports filtering by `title`, `author`, and `publication_year`.
+    - Users can search by title or author name and order results by title or publication year.
     """
 
     queryset = Book.objects.all()
@@ -23,9 +24,11 @@ class BookListView(generics.ListAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
     # Enable filtering
-    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = BookFilter
     search_fields = ['title', 'author__name', 'publication_year']
+    odering_fields = ['title', 'publication_year']
+    ordering = ['title'] # Default ordering
 
 
 class BookCreateView(generics.CreateAPIView):
