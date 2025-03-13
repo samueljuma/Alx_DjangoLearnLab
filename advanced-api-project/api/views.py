@@ -2,8 +2,10 @@ from django.shortcuts import render
 from rest_framework import generics
 from .models import Book
 from .serializers import BookSerializer
+from .filters import BookFilter
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class BookListView(generics.ListAPIView):
@@ -12,11 +14,16 @@ class BookListView(generics.ListAPIView):
 
     - Uses `ListAPIView` to provide a read-only list endpoint.
     - Allows unauthenticated users to read but requires authentication for any modification.
+    - Supports filtering by `title`, `author`, and `publication_year`.
     """
 
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+    # Enable filtering
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = BookFilter
 
 
 class BookCreateView(generics.CreateAPIView):

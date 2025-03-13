@@ -67,3 +67,73 @@ This API provides endpoints for managing books, including listing, creating, ret
    python manage.py runserver
    ```
 4. Access the API at `http://127.0.0.1:8000/`
+
+
+# Filtering Books in Django REST Framework
+
+This guide explains how to implement filtering for the **Book** model in a Django REST Framework (DRF) project using `django-filters`.
+
+---
+
+## 1️⃣ Install `django-filters`
+To enable filtering in DRF, first install the `django-filter` package:
+```bash
+pip install django-filter
+```
+
+Then, add `'django_filters'` to `INSTALLED_APPS` in your `settings.py`:
+```python
+INSTALLED_APPS = [
+    # Other installed apps...
+    'django_filters',
+]
+```
+
+---
+
+## 2️⃣ Update the `BookListView`
+Modify your `views.py` to integrate filtering in the **BookListView**:
+
+```python
+from django_filters.rest_framework import DjangoFilterBackend  # Import DjangoFilterBackend
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .models import Book
+from .serializers import BookSerializer
+
+class BookListView(generics.ListAPIView):
+    """
+    View to list all books with filtering support.
+    - Users can filter by `title`, `author__name`, and `publication_year`.
+    """
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    
+    # Enable filtering
+    filter_backends = [DjangoFilterBackend]  
+    filterset_fields = ['title', 'author__name', 'publication_year']
+```
+
+---
+
+## 3️⃣ How to Use Filtering
+Users can apply filters using query parameters when making a GET request to the books endpoint:
+
+### 🔹 Example Requests
+```bash
+GET books/?title=The Great Gatsby
+GET books/?author__name=J.K. Rowling
+GET books/?publication_year=2020
+```
+
+---
+
+## 4️⃣ Summary
+✅ Installed `django-filters`.
+✅ Updated `settings.py` to include `'django_filters'`.
+✅ Enabled filtering in `BookListView` using `DjangoFilterBackend`.
+✅ Users can now filter books by **title, author name, and publication year** using query parameters.
+
+---
+
