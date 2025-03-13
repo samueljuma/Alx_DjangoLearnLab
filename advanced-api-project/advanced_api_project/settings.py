@@ -83,6 +83,14 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",  # Filtering support
+        "rest_framework.filters.SearchFilter",  # Search functionality
+        "rest_framework.filters.OrderingFilter",  # Ordering support
+    ]
+}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
