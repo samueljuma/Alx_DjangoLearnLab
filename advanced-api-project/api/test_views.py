@@ -42,7 +42,7 @@ class BookAPITestCase(TestCase):
         """Test retrieving a single book by ID."""
         response = self.client.get(f'/api/books/{self.book1.id}/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()['title'], 'News Today')
+        self.assertEqual(response.data['title'], 'News Today')
 
     def test_update_book_authenticated(self):
         """Test updating a book with authentication."""
@@ -69,7 +69,7 @@ class BookAPITestCase(TestCase):
         """Test searching for books by title."""
         response = self.client.get("/api/books/?search=news")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(len(response.data), 1)
 
     def test_order_books(self):
         """Test ordering books by publication year."""
@@ -77,3 +77,4 @@ class BookAPITestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         books = response.json()
         self.assertTrue(books[0]['publication_year'] <= books[1]['publication_year'])
+        self.assertTrue(len(response.data), 3)
