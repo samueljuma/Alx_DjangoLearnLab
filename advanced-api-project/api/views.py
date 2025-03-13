@@ -16,7 +16,7 @@ class BookListView(generics.ListAPIView):
     - Uses `ListAPIView` to provide a read-only list endpoint.
     - Allows unauthenticated users to read but requires authentication for any modification.
     - Supports filtering by `title`, `author`, and `publication_year`.
-    - Users can search by title or author name and order results by title or publication year.
+    - Users can search by `title` or `author name` and order results by `title` or `publication year`.
     """
 
     queryset = Book.objects.all()
