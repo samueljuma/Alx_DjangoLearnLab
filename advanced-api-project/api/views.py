@@ -6,36 +6,66 @@ from .serializers import BookSerializer
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 
-# list all books
 class BookListView(generics.ListAPIView):
+    """
+    View to list all books.
+
+    - Uses `ListAPIView` to provide a read-only list endpoint.
+    - Allows unauthenticated users to read but requires authentication for any modification.
+    """
+
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-# Create a book
 class BookCreateView(generics.CreateAPIView):
+    """
+    View to create a new book.
+
+    - Uses `CreateAPIView` to handle `POST` requests.
+    - Only authenticated users can add new books.
+    """
+
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
 
 
-# Get Book by ID
 class BookDetailView(generics.RetrieveAPIView):
+    """
+    View to retrieve details of a specific book by its ID.
+
+    - Uses `RetrieveAPIView` to handle `GET` requests for a single object.
+    - Unauthenticated users can view details, but cannot modify.
+    """
+
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-# Update Book
 class BookUpdateView(generics.UpdateAPIView):
+    """
+    View to update an existing book.
+
+    - Uses `UpdateAPIView` to handle `PUT` and `PATCH` requests.
+    - Only authenticated users can modify book details.
+    """
+
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
 
 
-# Delete Book
 class BookDeleteView(generics.DestroyAPIView):
+    """
+    View to delete a book.
+
+    - Uses `DestroyAPIView` to handle `DELETE` requests.
+    - Only authenticated users can delete a book.
+    """
+
     queryset = Book.objects.all()
     serializer_class = BookSerializer
     permission_classes = [IsAuthenticated]
