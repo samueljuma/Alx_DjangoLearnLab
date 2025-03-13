@@ -130,14 +130,14 @@ GET books/?publication_year=2020
 ---
 
 ## 4️⃣ Summary
-✅ Installed `django-filters`.
-✅ Updated `settings.py` to include `'django_filters'`.
-✅ Enabled filtering in `BookListView` using `DjangoFilterBackend`.
-✅ Users can now filter books by **title, author name, and publication year** using query parameters.
+- ✅ Installed `django-filters`.
+- ✅ Updated `settings.py` to include `'django_filters'`.
+- ✅ Enabled filtering in `BookListView` using `DjangoFilterBackend`.
+- ✅ Users can now filter books by **title, author name, and publication year** using query parameters.
 
 ---
 
-# Book API - Search and Ordering Functionality
+# Search and Ordering Functionality
 
 ## Overview
 This API provides search and ordering functionality for retrieving book records. Users can filter books by title or author name, and order them based on title or publication year.
@@ -177,12 +177,12 @@ Users can search for books by `title` or `author name` using the `search` query 
 
 **Example: Search by title**
 ```
-http://localhost:8000/api/v1/books/?search=harry
+http://localhost:8000/books/?search=harry
 ```
 
 **Example: Search by author name**
 ```
-http://localhost:8000/api/v1/books/?search=rowling
+http://localhost:8000/books/?search=rowling
 ```
 
 ### 2️⃣ Ordering
@@ -190,17 +190,17 @@ Users can order results by `title` or `publication year` using the `ordering` qu
 
 **Example: Order by title (ascending)**
 ```
-http://localhost:8000/api/v1/books/?ordering=title
+http://localhost:8000/books/?ordering=title
 ```
 
 **Example: Order by publication year (ascending)**
 ```
-http://localhost:8000/api/v1/books/?ordering=publication_year
+http://localhost:8000/books/?ordering=publication_year
 ```
 
 **Example: Order by publication year (descending)**
 ```
-http://localhost:8000/api/v1/books/?ordering=-publication_year
+http://localhost:8000/books/?ordering=-publication_year
 ```
 
 💡 **Note:** Prefixing a field with `-` reverses the order (descending).
