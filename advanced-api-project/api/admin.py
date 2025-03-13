@@ -4,7 +4,7 @@ from .forms import BookAdminForm
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-  list_display = ('name', 'get_books')
+  list_display = ('id', 'name', 'get_books')
   
   def get_books(self, obj):
         """Return a comma-separated list of books written by the author."""
@@ -15,4 +15,4 @@ class AuthorAdmin(admin.ModelAdmin):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
   form = BookAdminForm
-  list_display = ('title', 'publication_year', 'author')
+  list_display = ('id','title', 'publication_year', 'author')
