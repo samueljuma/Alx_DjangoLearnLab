@@ -56,6 +56,13 @@ footer {
   text-align: center;
 }
 
+.auth-container img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
 .auth-container h2 {
   margin-bottom: 20px;
 }
@@ -127,9 +134,30 @@ footer {
   cursor: pointer;
   font-size: 18px;
 }
-.logout-btn2 {
-  background: none;
-  border: none;
-  cursor: pointer;
-  margin-top: 8px;
+
+.profile-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.profile-info img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 15px;
+  background: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
 }

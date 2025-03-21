@@ -4,12 +4,16 @@
 {% block title %}Profile - Django Blog{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <h2>Welcome, {{ user.username }}</h2>
-    <p>Email: {{ user.email }}</p>
-    <form method="post" action="{% url 'logout' %}" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="logout-btn2" >Logout</button>
-    </form>  
+<div class="profile-container">
+    <h2>Your Profile</h2>
+    
+    <div class="profile-info">
+        <img src="{{ request.user.profile.profile_picture.url }}" alt="Profile Picture" width="150">
+        <p><strong>Username:</strong> {{ request.user.username }}</p>
+        <p><strong>Email:</strong> {{ request.user.email }}</p>
+        <p><strong>Bio:</strong> {{ request.user.profile.bio }}</p>
+    </div>
+
+    <a href="{% url 'update_profile' %}" class="btn">Edit Profile</a>
 </div>
 {% endblock %}
