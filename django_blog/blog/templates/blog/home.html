@@ -1,0 +1,14 @@
+<!-- The home.html template extends the base.html template and overrides the title block with the title Home - Django Blog. 
+ The content block contains the main content of the home page, which includes a welcome message and a link to view 
+ the blog posts. -->
+{% extends "blog/base.html" %}
+
+{% block title %}Home - Django Blog{% endblock %}
+
+{% block content %}
+<div class="home-container">
+    <h1>Welcome to Django Blog</h1>
+    <p>Stay updated with the latest blog posts.</p>
+    <a href="{% url 'posts' %}" class="btn">View Posts</a>
+</div>
+{% endblock %}

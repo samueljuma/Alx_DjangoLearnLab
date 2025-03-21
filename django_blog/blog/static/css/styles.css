@@ -38,8 +38,98 @@ header nav ul li a {
 
 footer {
   text-align: center;
-  margin-top: 50px;
   padding: 10px;
   background-color: #333;
   color: white;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.auth-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center;
+}
+
+.auth-container h2 {
+  margin-bottom: 20px;
+}
+
+.auth-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-container input {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.auth-container button {
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.auth-container button:hover {
+  background-color: #555;
+}
+
+.home-container,
+.posts-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.posts-container .post {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.posts-container .post h2 {
+  color: #333;
+}
+
+.posts-container .post a {
+  text-decoration: none;
+  color: #007BFF;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 15px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+}
+.logout-btn2 {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 8px;
 }
