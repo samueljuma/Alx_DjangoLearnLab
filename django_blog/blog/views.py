@@ -6,7 +6,7 @@ from .models import Post
 from django.contrib.auth.decorators import login_required
 from .forms import UserUpdateForm, ProfileUpdateForm, PostForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 
@@ -108,7 +108,8 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         post = self.get_object()
         return self.request.user == post.author  # Only allow the author to edit
-
+    def get_success_url(self):
+            return reverse("post-detail", kwargs={"pk": self.object.pk})
 
 # Allow only the post author to delete the post
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
