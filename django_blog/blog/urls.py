@@ -20,7 +20,7 @@ urlpatterns = [
     path('profile/update/', update_profile, name='update_profile'),
     
     # Comments
-    path('posts/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
+    path('posts/<int:post_id>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
     path('comments/<int:pk>/edit/', CommentUpdateView.as_view(), name='comment-update'),
     path('comments/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
 ]
