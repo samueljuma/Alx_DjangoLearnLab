@@ -161,3 +161,7 @@ footer {
   text-decoration: none;
   border-radius: 5px;
 }
+
+.comment-hr {
+  margin-top: 20px;
+}

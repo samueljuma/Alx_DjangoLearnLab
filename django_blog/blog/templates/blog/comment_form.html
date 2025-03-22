@@ -1,0 +1,16 @@
+{% extends "blog/base.html" %}
+{% block title %}Comment{% endblock %}
+
+{% block content %}
+  <div class="auth-container">
+    <h2>{% if form.instance.pk %}Edit Comment{% else %}Add a Comment{% endif %}</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn">Save Comment</button>
+    </form>
+
+    <a href="{% url 'post-detail' form.instance.post.pk %}">Cancel</a>
+  </div>
+{% endblock %}
