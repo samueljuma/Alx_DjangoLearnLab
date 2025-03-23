@@ -3,9 +3,15 @@ from .models import Post, Profile, Comment
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["title", "author", "published_date"]
+    list_display = ["title", "author", "published_date", "get_tags"]
     search_fields = ["title", "content"]
-    list_filter = ["published_date"]
+    list_filter = ["published_date",] 
+
+    def get_tags(self, obj):
+        """Displays tags as a comma-separated list in list_display"""
+        return ", ".join(tag.name for tag in obj.tags.all())
+
+    get_tags.short_description = "Tags"
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
