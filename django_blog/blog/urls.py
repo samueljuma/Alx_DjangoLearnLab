@@ -4,7 +4,8 @@ from .views import (
     register, home, posts, profile_view, update_profile, 
     PostListView, PostDetailView, PostCreateView, 
     PostUpdateView, PostDeleteView, CommentCreateView, 
-    CommentUpdateView, CommentDeleteView, search_posts, posts_by_tag
+    CommentUpdateView, CommentDeleteView, search_posts, posts_by_tag,
+    PostByTagListView
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -31,7 +32,7 @@ urlpatterns = [
     
     # Search
     path("search/", search_posts, name="post-search"),  # Search URL
-    path("tags/<str:tag_name>/", posts_by_tag, name="posts-by-tag"),  # Filter posts by tag
+    path("tags/<slug:tag_slug>/", PostByTagListView.as_view(), name="posts-by-tag"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
