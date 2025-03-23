@@ -165,3 +165,62 @@ footer {
 .comment-hr {
   margin-top: 20px;
 }
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  max-width: 1000px;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin: 20px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.search-form button {
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-left: none;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.search-form button:hover {
+  background-color: #0056b3;
+}
+
+.tag-chip {
+  display: inline-block;
+  background-color: #0bbb95;
+  color: #f5f3f3;
+  font-size: 14px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin: 5px 3px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.tag-chip:hover {
+  background-color: #007bff;
+  transform: scale(1.05);
+}
+
+.tag-chip:active {
+  background-color: #ccc;
+}

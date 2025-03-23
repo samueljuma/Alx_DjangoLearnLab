@@ -8,6 +8,8 @@ from .forms import UserUpdateForm, ProfileUpdateForm, PostForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.db.models import Q
+from taggit.models import Tag
 
 def register(request):
     if request.method == "POST":
@@ -166,3 +168,23 @@ class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("post-detail", kwargs={"pk": self.object.post.pk})  # Redirect to post detail
+
+# Search for posts
+def search_posts(request):
+    query = request.GET.get("q")  # Get search query from URL
+    results = []
+
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |  # Search in title
+            Q(content__icontains=query) |  # Search in content
+            Q(tags__name__icontains=query)  # Search in tags
+        ).distinct()  # Avoid duplicate results
+
+    return render(request, "blog/search_results.html", {"results": results, "query": query})
+
+def posts_by_tag(request, tag_name):
+    tag = get_object_or_404(Tag, name=tag_name)  # Get the tag object
+    posts = Post.objects.filter(tags=tag)  # Get all posts with this tag
+
+    return render(request, "blog/posts_by_tag.html", {"tag": tag, "posts": posts})

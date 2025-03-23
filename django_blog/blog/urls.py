@@ -1,6 +1,11 @@
 from django.urls import path, include
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import register, home, posts, profile_view, update_profile, PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView, CommentCreateView, CommentUpdateView, CommentDeleteView
+from .views import ( 
+    register, home, posts, profile_view, update_profile, 
+    PostListView, PostDetailView, PostCreateView, 
+    PostUpdateView, PostDeleteView, CommentCreateView, 
+    CommentUpdateView, CommentDeleteView, search_posts, posts_by_tag
+)
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,6 +28,10 @@ urlpatterns = [
     path('post/<int:pk>/comments/new/', CommentCreateView.as_view(), name='comment-create'),
     path('comment/<int:pk>/update/', CommentUpdateView.as_view(), name='comment-update'),
     path('comment/<int:pk>/delete/', CommentDeleteView.as_view(), name='comment-delete'),
+    
+    # Search
+    path("search/", search_posts, name="post-search"),  # Search URL
+    path("tags/<str:tag_name>/", posts_by_tag, name="posts-by-tag"),  # Filter posts by tag
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

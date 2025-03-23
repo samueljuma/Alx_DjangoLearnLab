@@ -9,6 +9,15 @@
           <p>{{ object.content }}</p>
       </article>
 
+      {% if object.tags.all %}
+        <p><strong>Tags:</strong> 
+            {% for tag in object.tags.all %}
+              <a href="{% url 'posts-by-tag' tag.name %}" class="tag-chip">{{ tag.name }}</a>{% if not forloop.last %} {% endif %}
+            {% endfor %}
+        </p>
+      {% endif %}
+
+
       {% if user == object.author %}
           <a href="{% url 'post-update' object.pk %}" class="btn">Edit</a>
           <a href="{% url 'post-delete' object.pk %}" class="btn">Delete</a>
@@ -31,6 +40,7 @@
             <a href="{% url 'comment-update' comment.pk %}" class="btn">Edit</a>
             <a href="{% url 'comment-delete' comment.pk %}" class="btn">Delete</a>
           {% endif %}
+
         </div>
         <hr style="border: 1px solid #ddd; margin: 20px;">
       {% empty %}
