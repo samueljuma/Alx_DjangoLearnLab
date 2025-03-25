@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "django_filters",
     "accounts",
     "posts",
 ]
@@ -77,6 +78,9 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",  # Enable Token Auth
         "rest_framework.authentication.SessionAuthentication",  # Optional (for Browsable API)
     ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_PAGINATION_CLASS": "posts.pagination.StandardResultsSetPagination",
+    "PAGE_SIZE": 10,
 }
 
 WSGI_APPLICATION = "social_media_api.wsgi.application"
