@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 
-User = get_user_model()
 
 class TokenSerializer(serializers.ModelSerializer):
     token = serializers.CharField(source="key", read_only=True)  # Get the token key
@@ -15,7 +14,7 @@ class TokenSerializer(serializers.ModelSerializer):
 class FollowerSerializer(serializers.ModelSerializer):
     """Serializer for showing followers' basic details"""
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ["id", "username", "profile_picture"]
 
 
@@ -23,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
     followers = FollowerSerializer(many=True, read_only=True)
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ["id", "username", "email", "bio", "profile_picture", "followers"]
 
 
@@ -54,11 +53,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = ["id", "username", "email", "password"]
 
     def create(self, validated_data):
-        user = User.objects.create_user(**validated_data)
+        user = get_user_model().objects.create_user(**validated_data)
         return user
 
     def get_token(self, obj):
