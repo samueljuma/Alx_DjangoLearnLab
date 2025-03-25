@@ -13,7 +13,7 @@ class UserAdmin(admin.ModelAdmin):
     # Define the form layout when editing a user
     fieldsets = (
         (None, {"fields": ("username", "email", "password")}),
-        ("Personal Info", {"fields": ("first_name", "last_name")}),
+        ("Personal Info", {"fields": ("first_name", "last_name", "bio", "profile_picture", "followers")}),
         # ("Registration Details", {"fields": ("added_by", "approved_by")}), # Not needed - takes defaults
         ("Permissions", {"fields": ("is_staff", "is_superuser", "is_active", "groups", "user_permissions")}),
         ("Important Dates", {"fields": ("last_login", "date_joined")}),
