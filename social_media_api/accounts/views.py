@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import RegistrationSerializers, UserSerializer
+from .serializers import RegistrationSerializer, UserSerializer, LoginSerializer
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
@@ -13,15 +13,14 @@ class RegistrationAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = RegistrationSerializers(data=request.data)
+        serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            token, _ = Token.objects.get_or_create(user=user)
             return Response(
                 {
                     "message": f"User {user.username} registered successfully",
                     "user": UserSerializer(user).data,
-                    "token": token.key,
+                    "token": serializer.get_token(user),
                 },
                 status=status.HTTP_201_CREATED,
             )
@@ -32,32 +31,22 @@ class LoginAPIView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        data = request.data
-        username = data.get("username", None)
-        password = data.get("password", None)
-
-        if username is None or password is None:
-            return Response(
-                {"error": "Please provide both username and password"},
-                status=status.HTTP_400_BAD_REQUEST,
+        serializer = LoginSerializer(data=request.data)
+        if serializer.is_valid():
+            user = authenticate(
+                username=serializer.validated_data["username"],
+                password=serializer.validated_data["password"],
             )
-
-        user = authenticate(username=username, password=password)
-
-        if user is None:
             return Response(
-                {"error": "Invalid Credentials"}, status=status.HTTP_404_NOT_FOUND
+                {
+                    "message": "User logged in successfully",
+                    "user": UserSerializer(user).data,
+                    "token": serializer.get_token(user),
+                },
+                status=status.HTTP_200_OK,
             )
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        token, _ = Token.objects.get_or_create(user=user)
-        return Response(
-            {
-                "message": "User logged in successfully",
-                "user": UserSerializer(user).data,
-                "token": token.key,
-            },
-            status=status.HTTP_200_OK,
-        )
 
 class UserProfileView(RetrieveUpdateAPIView):
     serializer_class = UserSerializer
