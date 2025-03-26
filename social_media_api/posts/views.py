@@ -9,6 +9,7 @@ from .pagination import StandardResultsSetPagination
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework import permissions as permission
 
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
@@ -27,7 +28,7 @@ class CommentViewSet(viewsets.ModelViewSet):
     
 
 class UserFeedView(generics.GenericAPIView):
-  permission_classes = [IsAuthenticated]
+  permission_classes = [permission.IsAuthenticated]
   
   def get(self, request):
     following_users = request.user.following.all()
