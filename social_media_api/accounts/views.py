@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from .models import CustomUser
-from rest_framework import status
+from rest_framework import status, generics
 from django.shortcuts import get_object_or_404
 
 
@@ -67,32 +67,30 @@ class GetAuthTokenView(APIView):
         token, _ = Token.objects.get_or_create(user=request.user)
         return Response({"token": token.key})
 
-class FollowUserView(APIView):
+class FollowUserView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_follow = get_object_or_404(CustomUser, id=user_id)
+        user_to_follow = get_object_or_404(CustomUser.objects.all(), id=user_id)
 
         if request.user == user_to_follow:
             return Response({"error": "You cannot follow yourself."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Ensure only the logged-in user can modify their following list
         if user_to_follow in request.user.following.all():
             return Response({"error": "You are already following this user."}, status=status.HTTP_400_BAD_REQUEST)
 
         request.user.following.add(user_to_follow)
         return Response({"message": f"You are now following {user_to_follow.username}."}, status=status.HTTP_200_OK)
 
-class UnfollowUserView(APIView):
+class UnfollowUserView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, user_id):
-        user_to_unfollow = get_object_or_404(CustomUser, id=user_id)
+        user_to_unfollow = get_object_or_404(CustomUser.objects.all(), id=user_id)
 
         if request.user == user_to_unfollow:
             return Response({"error": "You cannot unfollow yourself."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Ensure only the logged-in user can modify their following list
         if user_to_unfollow not in request.user.following.all():
             return Response({"error": "You are not following this user."}, status=status.HTTP_400_BAD_REQUEST)
 
