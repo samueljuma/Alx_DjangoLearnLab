@@ -140,3 +140,14 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.CustomUser"
+
+
+# Security Settings
+# ["SECURE_BROWSER_XSS_FILTER", "X_FRAME_OPTIONS", "SECURE_SSL_REDIRECT"]
+
+SECURE_BROWSER_XSS_FILTER = True # Enables the browser's XSS filter
+X_FRAME_OPTIONS = "DENY" # Prevents clickjacking
+SECURE_CONTENT_TYPE_NOSNIFF = True # Prevents MIME type sniffing
+SECURE_SSL_REDIRECT = True  # Forces HTTPS (only if you have SSL enabled)
+CSRF_COOKIE_SECURE = True  # Ensures CSRF cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True  # Ensures session cookies are only sent over HTTPS
